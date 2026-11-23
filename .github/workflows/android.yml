@@ -1,4 +1,3 @@
-
 name: Build Android APK
 
 on:
@@ -20,39 +19,16 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Decode signing key
-        env:
-          KEY_DATA: ${{ secrets.SIGNING_KEY_BASE64 }}
-        run: |
-          if [ -z "$KEY_DATA" ]; then
-            echo "ERROR: SIGNING_KEY_BASE64 is empty"
-            exit 1
-          fi
-          printf '%s' "$KEY_DATA" | base64 --decode > "$RUNNER_TEMP/moze3-new.jks"
-          if [ ! -s "$RUNNER_TEMP/moze3-new.jks" ]; then
-            echo "ERROR: Signing key file is empty"
-            exit 1
-          fi
-          echo "SIGNING_KEYSTORE_FILE=$RUNNER_TEMP/moze3-new.jks" >> "$GITHUB_ENV"
-
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
 
-      - name: Build APKs
-        env:
-          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
-          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
-          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
-        run: |
-          gradle assembleDebug
-          gradle assembleRelease
+      - name: Build APK
+        run: gradle assembleDebug
 
-      - name: Upload APKs
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Moze3-Sennbelawen-Signed-APKs
-          path: |
-            app/build/outputs/apk/debug/*.apk
-            app/build/outputs/apk/release/*.apk
+          name: Moze3-Sennbelawen-APK
+          path: app/build/outputs/apk/debug/*.apk

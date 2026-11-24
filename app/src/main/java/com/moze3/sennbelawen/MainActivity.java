@@ -1,3 +1,4 @@
+
 package com.moze3.sennbelawen;
 
 import android.app.Activity;
@@ -22,7 +23,8 @@ public class MainActivity extends Activity {
         settings.setDomStorageEnabled(true);
 
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("https://script.google.com/macros/s/AKfycbzJaDrZHu6MNFU65Sy8tCkqcIiXMrToSe1rSpguCrkLGVc_Rp70tVcMT1k7_N3CLX8i/exec");
+
+        webView.loadUrl("https://script.google.com/macros/s/AKfycbyd9CsD04vRDCcofyjHCzNSmCCdBx6fi87RMaWGvR6gVfuoN8z2XlouQEN-P0NR8hfH/exec");
     }
 
     @Override
@@ -33,4 +35,4 @@ public class MainActivity extends Activity {
             super.onBackPressed();
         }
     }
-  }
+}
